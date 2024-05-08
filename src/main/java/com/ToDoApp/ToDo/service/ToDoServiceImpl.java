@@ -3,7 +3,6 @@ package com.ToDoApp.ToDo.service;
 
 import com.ToDoApp.ToDo.entity.ToDo;
 import com.ToDoApp.ToDo.repository.ToDoRepo;
-import org.springframework.beans.factory.annotation.Autowire;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,20 +23,33 @@ public class ToDoServiceImpl implements ToDoService{
     }
 
     @Override
-    public void saveTodo(ToDo toDo) {  // does not have any return value
-        this.toDoRepo.save(toDo);
+    public void saveToDo(ToDo todo) {
+        this.toDoRepo.save(todo);
     }
 
     @Override
-    public ToDo getToDoById(Long id) {  //return type of todo_ is expected
+    public ToDo getTodoById(Long id) {  //return type of todo_ is expected
         Optional<ToDo> optional = toDoRepo.findById(id);  // making optional to fetch by id
         ToDo toDo;
         if (optional.isPresent()) {
-            optional.get();  // getting sneakers from another store that has them in stock.
+            toDo = optional.get();  // getting sneakers from another store that has them in stock.
         } else {
             throw new RuntimeException("To for the id " + id + "is not found");
         }
         return toDo;
+    }
+
+    @Override
+    public void updateToDo(Long id, ToDo toDo){
+        ToDo todoFromDb = toDoRepo.findById(id).get();
+        todoFromDb.setTaskName(toDo.getTaskName());
+        todoFromDb.setDesc(toDo.getDesc());
+        toDoRepo.save(todoFromDb);
+    }
+
+    @Override
+    public void deleteTodo(Long id) {
+
     }
 
 }
