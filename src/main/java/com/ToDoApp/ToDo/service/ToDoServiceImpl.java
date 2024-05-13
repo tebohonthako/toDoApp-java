@@ -43,7 +43,7 @@ public class ToDoServiceImpl implements ToDoService{
     public void updateToDo(Long id, ToDo toDo){
         ToDo todoFromDb = toDoRepo.findById(id).get();
         todoFromDb.setTaskName(toDo.getTaskName());
-        todoFromDb.setDesc(toDo.getDesc());
+        todoFromDb.setDescription(toDo.getDescription());
         toDoRepo.save(todoFromDb);
     }
 
